@@ -1,7 +1,7 @@
 # ref: https://www.youtube.com/watch?v=gEceSAJI_3s
   # ref: https://gist.github.com/erikyuzwa/7411752ddcb95b09434aa88f38d91630
 
-  version: "3.8"
+version: "3"
 
 services:
 
@@ -55,7 +55,7 @@ services:
       - wordpress-db
     # image: wordpress:6.2.2-apache
     image: application-wp-v1
-    container_name: application-phpmyadmin
+    container_name: application-wp
     build:
       context: .
       dockerfile: ubuntu-container-build.dockerfile
