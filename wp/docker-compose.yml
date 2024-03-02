@@ -75,6 +75,9 @@ services:
       WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
     volumes:
       - ./:/var/www/html/
+      # Note: We can map just the wp-content folder to the host machine for optimization. 
+      # However, we will lose the ability to backup the entire WordPress installation, so leaving this way for clarity.
+
     networks:
       - wordpress-network
     restart: unless-stopped
