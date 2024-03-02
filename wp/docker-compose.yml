@@ -50,7 +50,7 @@ services:
       - 8081:80
     env_file: .env
     environment:
-      PMA_HOST: database
+      PMA_HOST: wordpress-db
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
     networks:
       - wordpress-network
