@@ -9,18 +9,24 @@ services:
     # mariadb image which supports both amd64 & arm64 architecture
     # image: mariadb:10.6.4-focal
     image: application-wp-db-v1
-    container_name: application-wp
+    container_name: application-wp-db
     build:
       context: .
       dockerfile: ubuntu-container-mariadb-build.dockerfile
     ports:
       - 3306:3306
-    env_file: .env.wp
+    env_file: .env
     environment:
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      # MARIADB_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
       MYSQL_USER: '${MYSQL_USER}'
       MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+
+      # MARIADB_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      # MARIADB_DATABASE: '${MYSQL_DATABASE}'
+      # MARIADB_USER: '${MYSQL_USER}'
+      # MARIADB_PASSWORD: '${MYSQL_PASSWORD}'
     volumes:
       - db-data:/var/lib/mysql
     networks:
@@ -42,7 +48,7 @@ services:
       dockerfile: ubuntu-container-phpmyadmin-build.dockerfile
     ports:
       - 8081:80
-    env_file: .env.wp
+    env_file: .env
     environment:
       PMA_HOST: database
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
@@ -63,7 +69,7 @@ services:
       - 8080:80
     env_file: .env
     environment:
-      WORDPRESS_DB_HOST: database:3306 # use the same name as database service
+      WORDPRESS_DB_HOST: wordpress-db:3306 # use the same name as database service
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
       WORDPRESS_DB_USER: '${MYSQL_USER}'
       WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
