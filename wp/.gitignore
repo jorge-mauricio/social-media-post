@@ -1,0 +1,8 @@
+# Secrets
+.env
+
+# Uploads
+/wp-content/uploads/
+
+# Log files
+*.log
