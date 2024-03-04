@@ -66,6 +66,18 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 
+# Laravel Backend
+
+## Facebook Configuration
+
+## Twitter Configuration
+- Regenerate token after each setting change.
+- update .env
+- php artisan config:cache 
+
 ## .env Configuration
 
 - Set database connection in .env file according to the wordpress database
+- Facebook data
+
+

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Atymic\Twitter\ServiceProvider\LaravelServiceProvider;
+use Atymic\Twitter\Facade\Twitter;
 
 return [
 
@@ -159,6 +161,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Atymic\Twitter\ServiceProvider\LaravelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -183,6 +186,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Twitter' => Atymic\Twitter\Facade\Twitter::class,
     ])->toArray(),
 
 ];
