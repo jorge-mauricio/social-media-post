@@ -27,5 +27,6 @@ Route::post('/auth/facebook', [SocialAuthController::class, 'facebookAuth']);
 Route::get('/auth/facebook', [SocialAuthController::class, 'facebookAuth']);
 Route::get('/auth/facebook/callback', [SocialAuthController::class, 'callback']);
 
-Route::post('/post/create', 'PostController@create');
+Route::post('/post/create', [PostController::class, 'create']);
+Route::get('/post/create', [PostController::class, 'create']); // debug
 Route::post('/post/schedule', 'ScheduleController@schedule');
