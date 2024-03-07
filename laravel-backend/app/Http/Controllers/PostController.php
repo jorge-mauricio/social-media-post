@@ -50,7 +50,7 @@ class PostController extends Controller
                     'response' => [
                         'data' => [
                             'id' => '123',
-                            'text' => 'Dummy text',
+                            'text' => $request->text,
                         ]
                     ],
                 ], 200);

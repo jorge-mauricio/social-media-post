@@ -66,18 +66,42 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 
-# Laravel Backend
+## Laravel Backend
+The Laravel backend handles the OAuth process with the social media platform and sends the posts. It provides endpoints for redirecting the user to the social media platform for authentication just for validating and handling the callback from the OAuth process. The backend serving method was defined as with php artisan serve instead of docker, so we can observe how docker containers interact with endpoints outside docker.
 
-## Facebook Configuration
+### Installation
+- `cd laravel-backend`
+- Copy the `.env.example` file to `.env` (`cp .env.example .env`)
+- Edit the `.env` file and set the `TWITTER_CONSUMER_KEY`, `TWITTER_CONSUMER_SECRET`, `TWITTER_ACCESS_TOKEN`, `TWITTER_ACCESS_TOKEN_SECRET`, `TWITTER_BEARER_TOKEN` environment variables to your Twitter API credentials you stored earlier.
+- Edit the `.env` file with the database information it was defined in the WordPress instance (`DB_PASSWORD`).
+- Run `composer install`
+- Run `npm install`
+- Run `php artisan key:generate` to generate an application key.
+- Run `php artisan serve` to start the server.
+- Check if the server is running on `http://127.0.0.1`.
+Note: run `php artisan config:cache` on any .env variable value change. 
 
-## Twitter Configuration
-- Regenerate token after each setting change.
-- update .env
-- php artisan config:cache 
+### Usage
+In order to validate if the tokens are working correctly, we create a special endpoint to login with the tokens defined in the `.env` file.
+- Access `http://127.0.0.1/auth/twitter`
+- Proceed with the authentication.
+- If successful, it should redirect you to a simple json response 200 page.
+- If error, check and regenerate your tokens.
+From this moment on, your WordPress instance is wired up with the Laravel Backend.
 
-## .env Configuration
+### Troubleshoot
+- cURL certificate issue (windows):
+If you come across an error such as: `error: cURL error 60: SSL certificate problem: unable to get local issuer certificate (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.twitter.com/oauth/request_token?oauth_callback=http%3A%2F%2F127.0.0.1%3A8000%2Fauth%2Ftwitter%2Fcallback`, follow the steps below:
+This error can occur if cURL not being able to verify the certificate provided by the server. This is common when you're working in a local development environment.
 
-- Set database connection in .env file according to the wordpress database
-- Facebook data
+One way to solve this issue is by downloading a file with the most common root certificates and tell PHP to use this file when making requests.
 
-
+Here's how you can do it:
+- Download the cacert.pem file from the curl website: https://curl.se/docs/caextract.html
+- Save this file somewhere in your system, for example, C:\ssl\cacert.pem.
+- Open your php.ini file. You can find this file by running php --ini in your terminal.
+- Find the [curl] section in the php.ini file, and add the following line:
+- Also find the [openssl] section and add the following line:
+- Save the php.ini file and restart your server.
+Remember to replace "C:\ssl\cacert.pem" with the actual path where you saved the cacert.pem file.
+This should solve your issue. If you're still having problems, please let me know! O MacOS, this problem didn't seem to happen.
