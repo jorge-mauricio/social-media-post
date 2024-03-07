@@ -18,7 +18,7 @@ function social_media_poster_send_scheduled_post($post_id) {
       // Logic to send the post.
       $response = wp_remote_post(getenv('BACKEND_URI') . '/api/post/create', array(
           'body' => array('text' => $post_data['content']),
-          'timeout' => '45',
+          'timeout' => '300',
           'headers' => array('Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8'),
       ));
 

@@ -89,22 +89,29 @@ function social_media_poster_handle_form_actions() {
             $post_data = $posts[$index];
             $response = wp_remote_post(getenv('BACKEND_URI') . '/api/post/create', array(
                 'body' => array('text' => $post_data['content']),
-                'timeout' => '45',
+                'timeout' => '300',
                 'headers' => array('Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8'),
             ));
 
             if (is_wp_error($response)) {
                 $error_message = $response->get_error_message();
+                // Note: This should be logged or handled more gracefully in a production environment.
+                // Or recorded in together with the post status (status_notes).
                 $posts[$index]['status'] = -1; // Mark as error
             } else {
                 $body = wp_remote_retrieve_body($response);
                 $data = json_decode($body, true);
 
-                if ($data['status'] === true) {
-                    $posts[$index]['status'] = 1; // Mark as sent
+                if (isset($data['status'])) {
+                    if ($data['status'] === true) {
+                        $posts[$index]['status'] = 1; // Mark as sent
+                    } else {
+                        $posts[$index]['status'] = -1; // Mark as error
+                    }
                 } else {
-                    $posts[$index]['status'] = -1; // Mark as error
+                    $posts[$index]['status'] = 2; // Fail
                 }
+
             }
 
             update_option('social_media_poster_posts', $posts);

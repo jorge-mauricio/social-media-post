@@ -102,6 +102,9 @@ function social_media_poster_settings_page() {
                       case -1:
                           $statusText = 'Error';
                           break;
+                      case 2:
+                          $statusText = 'Fail';
+                          break;
                   }
 
                   echo "<tr>
@@ -120,7 +123,6 @@ function social_media_poster_settings_page() {
               ?>
           </tbody>
       </table>
-
   </div>
   <?php
 }

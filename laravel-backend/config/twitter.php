@@ -18,4 +18,7 @@ return [
     'authenticate_url' => 'https://api.twitter.com/oauth/authenticate',
     'access_token_url' => 'https://api.twitter.com/oauth/access_token',
     'request_token_url' => 'https://api.twitter.com/oauth/request_token',
+
+    'callback_url' => env('TWITTER_CALLBACK_URL', 'http://localhost:8000/auth/twitter/callback'),
+    'api_force_true' => env('DEBUG_TWITTER_API_FORCE_TRUE', false),
 ];
