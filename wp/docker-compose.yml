@@ -73,6 +73,7 @@ services:
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
       WORDPRESS_DB_USER: '${MYSQL_USER}'
       WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
+      BACKEND_URI: '${BACKEND_URI}'
     volumes:
       - ./:/var/www/html/
       # Note: We can map just the wp-content folder to the host machine for optimization. 
