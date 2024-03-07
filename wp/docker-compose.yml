@@ -1,13 +1,9 @@
-# ref: https://www.youtube.com/watch?v=gEceSAJI_3s
-  # ref: https://gist.github.com/erikyuzwa/7411752ddcb95b09434aa88f38d91630
-
 version: "3"
 
 services:
 
   wordpress-db:
     # mariadb image which supports both amd64 & arm64 architecture
-    # image: mariadb:10.6.4-focal
     image: application-wp-db-v1
     container_name: application-wp-db
     build:
@@ -18,15 +14,9 @@ services:
     env_file: .env
     environment:
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-      # MARIADB_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
       MYSQL_DATABASE: '${MYSQL_DATABASE}'
       MYSQL_USER: '${MYSQL_USER}'
       MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
-
-      # MARIADB_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-      # MARIADB_DATABASE: '${MYSQL_DATABASE}'
-      # MARIADB_USER: '${MYSQL_USER}'
-      # MARIADB_PASSWORD: '${MYSQL_PASSWORD}'
     volumes:
       - db-data:/var/lib/mysql
     networks:
@@ -40,7 +30,6 @@ services:
   wordpress-phpmyadmin:
     depends_on:
       - wordpress-db
-    # image: phpmyadmin/phpmyadmin
     image: application-wp-phpmyadmin-v1
     container_name: application-phpmyadmin
     build:
@@ -59,7 +48,6 @@ services:
   wordpress:
     depends_on:
       - wordpress-db
-    # image: wordpress:6.2.2-apache
     image: application-wp-v1
     container_name: application-wp
     build:
@@ -73,6 +61,7 @@ services:
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
       WORDPRESS_DB_USER: '${MYSQL_USER}'
       WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
+      BACKEND_URI: '${BACKEND_URI}'
     volumes:
       - ./:/var/www/html/
       # Note: We can map just the wp-content folder to the host machine for optimization. 
